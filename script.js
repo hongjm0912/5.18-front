@@ -156,6 +156,7 @@ async function loadPosts() {
         refreshAllBlocks();
         updateCounter();
         updateNextPosition();
+        renderPostsList();
     } catch (e) {
         console.warn('추모글 로드 실패 (백엔드 확인):', e);
         updateNextPosition(); // still set "position 1" label
@@ -269,6 +270,7 @@ async function submitPost() {
         posts[position] = { name, content, position, createdAt: new Date().toISOString() };
         updateCounter();
         updateNextPosition();
+        renderPostsList();
 
         /* Animate the newly lit block */
         const blockEl = towerEl.querySelector(`[data-position="${position}"]`);
@@ -291,6 +293,34 @@ async function submitPost() {
         submitBtn.textContent = '탑에 새기기';
         alert('오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
     }
+}
+
+/* ══════════════════════════════════════════
+   Posts list render
+   ══════════════════════════════════════════ */
+function renderPostsList() {
+    const grid = document.getElementById('posts-grid');
+    if (!grid) return;
+    const list = Object.values(posts).sort((a, b) => a.position - b.position);
+    if (list.length === 0) {
+        grid.innerHTML = '';
+        return;
+    }
+    grid.innerHTML = list.map(p => `
+        <div class="post-card">
+            <div class="post-card-name">${escapeHtml(p.name)}</div>
+            <div class="post-card-content">${escapeHtml(p.content)}</div>
+            <div class="post-card-date">${formatDate(p.createdAt)}</div>
+        </div>
+    `).join('');
+}
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
 }
 
 /* ══════════════════════════════════════════
