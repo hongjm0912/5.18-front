@@ -102,9 +102,133 @@ function generateGrid() {
 }
 
 /* ══════════════════════════════════════════
+   Light-up visual effects
+   ══════════════════════════════════════════ */
+function triggerLightEffect(blockEl) {
+    const rect = blockEl.getBoundingClientRect();
+    const cx = rect.left + rect.width  / 2;
+    const cy = rect.top  + rect.height / 2;
+
+    /* Three expanding ripple rings */
+    const rings = [
+        { size: 60,  delay: 0,    color: 'rgba(255,248,200,.75)' },
+        { size: 140, delay: 100,  color: 'rgba(240,190,80,.5)' },
+        { size: 260, delay: 220,  color: 'rgba(212,148,62,.3)' },
+    ];
+    rings.forEach(({ size, delay, color }) => {
+        const burst = document.createElement('div');
+        burst.className = 'light-burst';
+        burst.style.cssText = [
+            `left:${cx}px`, `top:${cy}px`,
+            `width:${size}px`, `height:${size}px`,
+            `background:radial-gradient(circle, ${color} 0%, transparent 68%)`,
+            `box-shadow:0 0 ${size * 0.4}px ${color}`,
+            `animation-delay:${delay}ms`,
+        ].join(';');
+        document.body.appendChild(burst);
+        setTimeout(() => burst.remove(), 1400 + delay);
+    });
+
+    /* Neighbor glow on surrounding blocks */
+    towerEl.querySelectorAll('.block').forEach(el => {
+        if (el === blockEl) return;
+        const r  = el.getBoundingClientRect();
+        const dx = (r.left + r.width  / 2) - cx;
+        const dy = (r.top  + r.height / 2) - cy;
+        if (dx * dx + dy * dy < 90 * 90) {
+            el.classList.add('neighbor-glow');
+            setTimeout(() => el.classList.remove('neighbor-glow'), 1700);
+        }
+    });
+
+    /* Subtle gold vignette flash over the whole page */
+    const flash = document.createElement('div');
+    flash.style.cssText = [
+        'position:fixed', 'inset:0', 'pointer-events:none', 'z-index:400',
+        `background:radial-gradient(ellipse at ${cx}px ${cy}px,
+            rgba(212,148,62,.14) 0%, rgba(212,148,62,.06) 30%, transparent 65%)`,
+        'animation:screen-flash 1.1s ease forwards',
+    ].join(';');
+    document.body.appendChild(flash);
+    setTimeout(() => flash.remove(), 1200);
+}
+
+/* ══════════════════════════════════════════
+   Intro Storytelling Scene
+   ══════════════════════════════════════════ */
+function initIntro() {
+    const introContainer = document.getElementById('intro-container');
+    const introScene     = document.getElementById('intro-scene');
+    const introParticles = document.getElementById('intro-particles');
+    const stages = [
+        document.getElementById('stage-1'),
+        document.getElementById('stage-2'),
+        document.getElementById('stage-3'),
+    ];
+
+    /* Spawn floating embers inside intro */
+    for (let i = 0; i < 70; i++) {
+        const e = document.createElement('div');
+        e.className = 'intro-ember';
+        const sz = Math.random() * 2.5 + 0.8;
+        e.style.cssText = [
+            `width:${sz}px`, `height:${sz}px`,
+            `left:${Math.random() * 100}%`,
+            `bottom:-${sz * 2}px`,
+            `animation-duration:${Math.random() * 11 + 8}s`,
+            `animation-delay:${Math.random() * 7}s`,
+            `--idrift:${(Math.random() - 0.5) * 180}px`,
+            `opacity:0`,
+        ].join(';');
+        introParticles.appendChild(e);
+    }
+
+    window.addEventListener('scroll', () => {
+        const scrollY      = window.scrollY;
+        const containerTop = introContainer.getBoundingClientRect().top + scrollY;
+        const progress     = Math.min(Math.max(
+            (scrollY - containerTop) / introContainer.offsetHeight, 0), 1);
+
+        stages.forEach((stage, idx) => {
+            const start = idx / stages.length;
+            const end   = (idx + 1) / stages.length;
+            let opacity = 0;
+            let z       = -1000;
+
+            if (progress >= start && progress < end) {
+                const sp = (progress - start) / (end - start);
+                if (sp < 0.2) {
+                    opacity = sp * 5;
+                    z = -1000 + sp * 1600;
+                } else if (sp > 0.8) {
+                    opacity = (1 - sp) * 5;
+                    z = 600 + (sp - 0.8) * 2500;
+                } else {
+                    opacity = 1;
+                    z = -680 + sp * 1900;
+                }
+            } else if (progress >= end) {
+                opacity = 0;
+                z = 2200;
+            }
+
+            stage.style.opacity   = Math.max(0, Math.min(1, opacity));
+            stage.style.transform = `translateZ(${z}px)`;
+            stage.style.pointerEvents = opacity > 0.7 ? 'auto' : 'none';
+        });
+
+        /* Fade out the whole scene at the very end */
+        introScene.style.opacity = progress > 0.94
+            ? String(Math.max(0, 1 - (progress - 0.94) * 16.7))
+            : '1';
+    }, { passive: true });
+}
+
+/* ══════════════════════════════════════════
    Init
    ══════════════════════════════════════════ */
 async function init() {
+    initIntro();
     buildTower();
     initParticles();
     await loadPosts();
@@ -279,8 +403,9 @@ async function submitPost() {
             blockEl.className = 'block filled light-up' + (isSphere ? ' sphere-block' : '');
             blockEl.textContent = name;
             blockEl.title = `${name} — 클릭하여 추모글 보기`;
-            setTimeout(() => blockEl.classList.remove('light-up'), 1050);
+            setTimeout(() => blockEl.classList.remove('light-up'), 2500);
             setTimeout(() => blockEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 80);
+            setTimeout(() => triggerLightEffect(blockEl), 650);
         }
 
         inpName.value = ''; inpContent.value = '';
