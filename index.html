@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5·18 민주화운동 추모탑</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="particles-canvas"></canvas>
+
+    <div class="page-wrapper">
+
+        <header class="site-header">
+            <div class="flame">✦</div>
+            <h1 class="site-title">5·18 민주화운동<br>추모탑</h1>
+            <p class="site-date">1980년 5월 18일 — 5월 27일</p>
+            <p class="site-desc">이름 한 자 한 자가 탑이 됩니다</p>
+            <div class="counter-badge">
+                <span id="filled-count">0</span> / <span id="total-count">—</span>명이 함께하고 있습니다
+            </div>
+        </header>
+
+        <!-- Tower -->
+        <section class="tower-section">
+            <div class="tower-scroll">
+                <div id="tower" class="tower"></div>
+            </div>
+        </section>
+
+        <!-- Legend -->
+        <div class="legend">
+            <span class="legend-item">
+                <span class="legend-swatch empty-swatch"></span>빈 자리 (추모글 작성은 아래 폼에서)
+            </span>
+            <span class="legend-item">
+                <span class="legend-swatch filled-swatch"></span>추모글 있음 (클릭하여 보기)
+            </span>
+        </div>
+
+        <!-- Write Section -->
+        <section class="write-section" id="write-section">
+            <div class="write-card">
+                <div class="write-header">
+                    <span class="write-icon">✦</span>
+                    <h2>추모의 글 남기기</h2>
+                    <p class="write-desc">이름과 글을 작성하면 탑의 빈 블록에 이름이 영원히 새겨집니다</p>
+                </div>
+                <p class="next-pos-info" id="next-pos-info">
+                    당신의 이름은 <strong id="next-pos-label">—</strong>번 블록에 새겨집니다
+                </p>
+                <div class="form-field">
+                    <label for="inp-name">이름 (닉네임)</label>
+                    <input id="inp-name" type="text" placeholder="탑에 새겨질 이름" maxlength="20" autocomplete="off">
+                </div>
+                <div class="form-field">
+                    <label for="inp-content">추모의 글</label>
+                    <textarea id="inp-content" placeholder="당신의 마음을 전해주세요..." maxlength="500" rows="4"></textarea>
+                    <div class="char-counter"><span id="char-count">0</span> / 500</div>
+                </div>
+                <button id="submit-btn" class="submit-btn" type="button">탑에 새기기</button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- View Modal (filled block click) -->
+    <div id="modal-overlay" class="modal-overlay hidden">
+        <div class="modal" role="dialog" aria-modal="true">
+            <button class="modal-close" id="modal-close" aria-label="닫기">✕</button>
+            <div class="panel-label">추모의 글</div>
+            <div class="panel-meta" id="view-meta"></div>
+            <div class="panel-name" id="view-name"></div>
+            <div class="panel-content" id="view-content"></div>
+            <div class="panel-date" id="view-date"></div>
+        </div>
+    </div>
+
+    <footer class="site-footer">
+        <p>역사를 잊은 민족에게 미래는 없습니다</p>
+        <p class="footer-sub">광주민주화운동의 정신을 영원히 기억합니다</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
