@@ -9,39 +9,6 @@
 <body>
     <canvas id="particles-canvas"></canvas>
 
-    <!-- Storytelling Intro -->
-    <div class="intro-container" id="intro-container">
-        <div class="intro-scene" id="intro-scene">
-            <div class="intro-particles" id="intro-particles"></div>
-
-            <div class="intro-stage" id="stage-1">
-                <div class="intro-flame">✦</div>
-                <h2 class="intro-date">1980 · 05 · 18</h2>
-                <div class="intro-divider"></div>
-                <p class="intro-subtitle">가장 어두웠던 날,<br>가장 찬란한 용기가 빛났습니다</p>
-            </div>
-
-            <div class="intro-stage" id="stage-2">
-                <h2 class="intro-heading">민주주의의 불꽃</h2>
-                <div class="intro-divider"></div>
-                <p class="intro-body">
-                    수천 명의 목소리가 하나의 거대한 빛이 되어<br>
-                    오늘날 우리가 누리는 자유의 밑거름이 되었습니다
-                </p>
-            </div>
-
-            <div class="intro-stage" id="stage-3">
-                <h2 class="intro-heading">이름 한 자 한 자가<br>탑이 됩니다</h2>
-                <div class="intro-divider"></div>
-                <p class="intro-body">
-                    당신의 마음을 보태어<br>
-                    결코 꺼지지 않는 기억의 탑을 완성해주세요
-                </p>
-                <div class="intro-scroll-hint">↓</div>
-            </div>
-        </div>
-    </div>
-
     <div class="page-wrapper">
 
         <header class="site-header">
@@ -54,46 +21,53 @@
             </div>
         </header>
 
-        <!-- Tower -->
-        <section class="tower-section">
-            <div class="tower-scroll">
-                <div id="tower" class="tower"></div>
-            </div>
-        </section>
+        <!-- Tower + Write side by side -->
+        <div class="tower-write-row">
 
-        <!-- Legend -->
-        <div class="legend">
-            <span class="legend-item">
-                <span class="legend-swatch empty-swatch"></span>빈 자리 (추모글 작성은 아래 폼에서)
-            </span>
-            <span class="legend-item">
-                <span class="legend-swatch filled-swatch"></span>추모글 있음 (클릭하여 보기)
-            </span>
+            <!-- Left: Tower -->
+            <div class="tower-col">
+                <section class="tower-section">
+                    <div class="tower-scroll">
+                        <div id="tower" class="tower"></div>
+                    </div>
+                </section>
+                <div class="legend">
+                    <span class="legend-item">
+                        <span class="legend-swatch empty-swatch"></span>빈 자리
+                    </span>
+                    <span class="legend-item">
+                        <span class="legend-swatch filled-swatch"></span>추모글 있음 (클릭)
+                    </span>
+                </div>
+            </div>
+
+            <!-- Right: Write form -->
+            <div class="write-col">
+                <section class="write-section" id="write-section">
+                    <div class="write-card">
+                        <div class="write-header">
+                            <span class="write-icon">✦</span>
+                            <h2>추모의 글 남기기</h2>
+                            <p class="write-desc">이름과 글을 작성하면 탑의 빈 블록에 이름이 영원히 새겨집니다</p>
+                        </div>
+                        <p class="next-pos-info" id="next-pos-info">
+                            당신의 이름은 <strong id="next-pos-label">—</strong>번 블록에 새겨집니다
+                        </p>
+                        <div class="form-field">
+                            <label for="inp-name">이름 (닉네임)</label>
+                            <input id="inp-name" type="text" placeholder="탑에 새겨질 이름" maxlength="20" autocomplete="off">
+                        </div>
+                        <div class="form-field">
+                            <label for="inp-content">추모의 글</label>
+                            <textarea id="inp-content" placeholder="당신의 마음을 전해주세요..." maxlength="500" rows="4"></textarea>
+                            <div class="char-counter"><span id="char-count">0</span> / 500</div>
+                        </div>
+                        <button id="submit-btn" class="submit-btn" type="button">탑에 새기기</button>
+                    </div>
+                </section>
+            </div>
+
         </div>
-
-        <!-- Write Section -->
-        <section class="write-section" id="write-section">
-            <div class="write-card">
-                <div class="write-header">
-                    <span class="write-icon">✦</span>
-                    <h2>추모의 글 남기기</h2>
-                    <p class="write-desc">이름과 글을 작성하면 탑의 빈 블록에 이름이 영원히 새겨집니다</p>
-                </div>
-                <p class="next-pos-info" id="next-pos-info">
-                    당신의 이름은 <strong id="next-pos-label">—</strong>번 블록에 새겨집니다
-                </p>
-                <div class="form-field">
-                    <label for="inp-name">이름 (닉네임)</label>
-                    <input id="inp-name" type="text" placeholder="탑에 새겨질 이름" maxlength="20" autocomplete="off">
-                </div>
-                <div class="form-field">
-                    <label for="inp-content">추모의 글</label>
-                    <textarea id="inp-content" placeholder="당신의 마음을 전해주세요..." maxlength="500" rows="4"></textarea>
-                    <div class="char-counter"><span id="char-count">0</span> / 500</div>
-                </div>
-                <button id="submit-btn" class="submit-btn" type="button">탑에 새기기</button>
-            </div>
-        </section>
 
     </div>
 

@@ -5,8 +5,8 @@
 
 const API = 'https://518-production.up.railway.app/api/board';
 
-const GRID_COLS = 24;
-const GRID_ROWS = 50;
+const GRID_COLS = 22;
+const GRID_ROWS = 48;
 
 let totalBlocks = 0;
 let posts = {};
@@ -43,60 +43,58 @@ function generateGrid() {
     const rows = (r1, r2, c1, c2, t = 1) => { for (let r = r1; r <= r2; r++) row(r, c1, c2, t); };
 
     /* ── Section A: Twin spires (rows 0–9) ─────────────────────────────
-       Left spire: cols 9–10 (2 wide)
-       Right spire: cols 13–14 (2 wide)
-       Gap between: cols 11–12                                          */
-    rows(0, 9,  9, 10);
-    rows(0, 9, 13, 14);
+       Left spire: cols 8–9 (2 wide)
+       Right spire: cols 12–13 (2 wide)
+       Gap between: cols 10–11                                          */
+    rows(0, 9,  8,  9);
+    rows(0, 9, 12, 13);
 
     /* ── Section B: Spire → pillar transition (rows 10–11) ─────────────
-       Left widens to cols 7–10 (4 wide)
-       Right widens to cols 13–16 (4 wide)                              */
-    rows(10, 11,  7, 10);
-    rows(10, 11, 13, 16);
+       Left widens to cols 7–9 (3 wide)
+       Right widens to cols 12–14 (3 wide)                              */
+    rows(10, 11,  7,  9);
+    rows(10, 11, 12, 14);
 
     /* ── Section C: Sphere / bell area (rows 12–19) ────────────────────
        Wings spread outward, sphere fills center gap                     */
-    row(12,  6, 10);  row(12, 13, 17);                          // slight wing
-    row(13,  5, 10);  row(13, 13, 18);                          // wider wing
-    row(14,  3, 10);  row(14, 11, 12, 2); row(14, 13, 20);     // max wing + sphere top
-    row(15,  3, 10);  row(15, 11, 12, 2); row(15, 13, 20);     // sphere centre
-    row(16,  3, 10);  row(16, 11, 12, 2); row(16, 13, 20);     // sphere centre
-    row(17,  4, 10);  row(17, 11, 12, 2); row(17, 13, 19);     // sphere bottom
-    row(18,  5, 10);  row(18, 13, 18);                          // wing closing
-    row(19,  6, 10);  row(19, 13, 17);                          // wing closing
+    row(12,  5,  9);  row(12, 12, 16);                          // slight wing
+    row(13,  4,  9);  row(13, 12, 17);                          // wider wing
+    row(14,  2,  9);  row(14, 10, 11, 2); row(14, 12, 19);     // max wing + sphere top
+    row(15,  2,  9);  row(15, 10, 11, 2); row(15, 12, 19);     // sphere centre
+    row(16,  2,  9);  row(16, 10, 11, 2); row(16, 12, 19);     // sphere centre
+    row(17,  3,  9);  row(17, 10, 11, 2); row(17, 12, 18);     // sphere bottom
+    row(18,  4,  9);  row(18, 12, 17);                          // wing closing
+    row(19,  5,  9);  row(19, 12, 16);                          // wing closing
 
     /* ── Section D: Upper pillars (rows 20–27) ─────────────────────────
-       Left: cols 7–10 | gap: 11–12 | Right: cols 13–16               */
-    rows(20, 27,  7, 10);
-    rows(20, 27, 13, 16);
+       Left: cols 7–9 | gap: 10–11 | Right: cols 12–14               */
+    rows(20, 27,  7,  9);
+    rows(20, 27, 12, 14);
 
     /* ── Section E: Upper crossbar (rows 28–29) ────────────────────────
        Solid bar + bracket caps (1 block wider each side)               */
-    rows(28, 29,  6, 17);
+    rows(28, 29,  5, 16);
 
     /* ── Section F: Middle pillars (rows 30–39) ────────────────────────
        Same width as upper pillars                                       */
-    rows(30, 39,  7, 10);
-    rows(30, 39, 13, 16);
+    rows(30, 39,  7,  9);
+    rows(30, 39, 12, 14);
 
     /* ── Section G: Lower crossbar (rows 40–41) ────────────────────────
        Same cap style as upper crossbar                                  */
-    rows(40, 41,  6, 17);
+    rows(40, 41,  5, 16);
 
     /* ── Section H: Lower flare (rows 42–44) ───────────────────────────
        Pillars step outward toward base                                  */
-    row(42,  6, 10);  row(42, 13, 17);
-    row(43,  5, 10);  row(43, 13, 18);
-    row(44,  4, 10);  row(44, 13, 19);
+    row(42,  5,  9);  row(42, 12, 16);
+    row(43,  4,  9);  row(43, 12, 17);
+    row(44,  3,  9);  row(44, 12, 18);
 
-    /* ── Section I: Stepped base (rows 45–49) ──────────────────────────
+    /* ── Section I: Stepped base (rows 45–47) ──────────────────────────
        Each row steps 1 block outward on both sides                      */
-    row(45,  3, 10);  row(45, 13, 20);
-    row(46,  2, 10);  row(46, 13, 21);
-    row(47,  1, 10);  row(47, 13, 22);
-    row(48,  0, 10);  row(48, 13, 23);
-    row(49,  0, 10);  row(49, 13, 23);  // ground row (same width)
+    row(45,  2,  9);  row(45, 12, 19);
+    row(46,  1,  9);  row(46, 12, 20);
+    row(47,  0,  9);  row(47, 12, 21);  // ground row
 
     return G;
 }
@@ -154,81 +152,9 @@ function triggerLightEffect(blockEl) {
 }
 
 /* ══════════════════════════════════════════
-   Intro Storytelling Scene
-   ══════════════════════════════════════════ */
-function initIntro() {
-    const introContainer = document.getElementById('intro-container');
-    const introScene     = document.getElementById('intro-scene');
-    const introParticles = document.getElementById('intro-particles');
-    const stages = [
-        document.getElementById('stage-1'),
-        document.getElementById('stage-2'),
-        document.getElementById('stage-3'),
-    ];
-
-    /* Spawn floating embers inside intro */
-    for (let i = 0; i < 70; i++) {
-        const e = document.createElement('div');
-        e.className = 'intro-ember';
-        const sz = Math.random() * 2.5 + 0.8;
-        e.style.cssText = [
-            `width:${sz}px`, `height:${sz}px`,
-            `left:${Math.random() * 100}%`,
-            `bottom:-${sz * 2}px`,
-            `animation-duration:${Math.random() * 11 + 8}s`,
-            `animation-delay:${Math.random() * 7}s`,
-            `--idrift:${(Math.random() - 0.5) * 180}px`,
-            `opacity:0`,
-        ].join(';');
-        introParticles.appendChild(e);
-    }
-
-    window.addEventListener('scroll', () => {
-        const scrollY      = window.scrollY;
-        const containerTop = introContainer.getBoundingClientRect().top + scrollY;
-        const progress     = Math.min(Math.max(
-            (scrollY - containerTop) / introContainer.offsetHeight, 0), 1);
-
-        stages.forEach((stage, idx) => {
-            const start = idx / stages.length;
-            const end   = (idx + 1) / stages.length;
-            let opacity = 0;
-            let z       = -1000;
-
-            if (progress >= start && progress < end) {
-                const sp = (progress - start) / (end - start);
-                if (sp < 0.2) {
-                    opacity = sp * 5;
-                    z = -1000 + sp * 1600;
-                } else if (sp > 0.8) {
-                    opacity = (1 - sp) * 5;
-                    z = 600 + (sp - 0.8) * 2500;
-                } else {
-                    opacity = 1;
-                    z = -680 + sp * 1900;
-                }
-            } else if (progress >= end) {
-                opacity = 0;
-                z = 2200;
-            }
-
-            stage.style.opacity   = Math.max(0, Math.min(1, opacity));
-            stage.style.transform = `translateZ(${z}px)`;
-            stage.style.pointerEvents = opacity > 0.7 ? 'auto' : 'none';
-        });
-
-        /* Fade out the whole scene at the very end */
-        introScene.style.opacity = progress > 0.94
-            ? String(Math.max(0, 1 - (progress - 0.94) * 16.7))
-            : '1';
-    }, { passive: true });
-}
-
-/* ══════════════════════════════════════════
    Init
    ══════════════════════════════════════════ */
 async function init() {
-    initIntro();
     buildTower();
     initParticles();
     await loadPosts();
@@ -241,29 +167,36 @@ function buildTower() {
     const grid = generateGrid();
     towerEl.innerHTML = '';
 
+    /* Assign positions bottom-to-top, left-to-right */
+    const posGrid = Array.from({ length: GRID_ROWS }, () => new Array(GRID_COLS).fill(0));
     let pos = 1;
+    for (let r = GRID_ROWS - 1; r >= 0; r--) {
+        for (let c = 0; c < GRID_COLS; c++) {
+            if (grid[r][c] !== 0) posGrid[r][c] = pos++;
+        }
+    }
+    totalBlocks = pos - 1;
 
+    /* Build DOM top-to-bottom for correct visual layout */
     for (let r = 0; r < GRID_ROWS; r++) {
         for (let c = 0; c < GRID_COLS; c++) {
             const type = grid[r][c];
-
             if (type === 0) {
                 const spacer = document.createElement('div');
                 spacer.className = 'cell-empty';
                 towerEl.appendChild(spacer);
             } else {
+                const p = posGrid[r][c];
                 const el = document.createElement('div');
                 el.className = 'block empty' + (type === 2 ? ' sphere-block' : '');
-                el.dataset.position = pos;
-                el.textContent = pos;
+                el.dataset.position = p;
+                el.textContent = p;
                 el.addEventListener('click', onBlockClick);
                 towerEl.appendChild(el);
-                pos++;
             }
         }
     }
 
-    totalBlocks = pos - 1;
     totalCount.textContent = totalBlocks;
 }
 
