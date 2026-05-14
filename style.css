@@ -69,11 +69,13 @@ body {
 .site-desc  { font-size: .84rem; color: var(--text-dim); margin-bottom: 22px; }
 
 .counter-badge {
-    display: inline-block;
+    display: block;
+    text-align: center;
     border: 1px solid rgba(212,148,62,.3);
     background: rgba(212,148,62,.07);
     border-radius: 20px; padding: 6px 22px;
     font-size: .86rem; color: var(--gold);
+    margin-top: 16px;
 }
 .counter-badge #filled-count,
 .counter-badge #total-count { font-weight: 700; font-size: 1.05rem; }
