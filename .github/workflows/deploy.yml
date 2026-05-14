@@ -16,6 +16,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd /var/www/frontend
+            cd ~/frontend
             git pull
+            docker compose -f docker-compose.prod.yml up --build -d frontend
             echo "프론트엔드 배포 완료"

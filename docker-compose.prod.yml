@@ -1,0 +1,19 @@
+services:
+  frontend:
+    build: .
+    network_mode: host
+    restart: always
+    volumes:
+      - ./nginx.prod.conf:/etc/nginx/conf.d/default.conf
+
+  backend:
+    build: ../backend
+    network_mode: host
+    restart: always
+    environment:
+      MYSQLHOST: localhost
+      MYSQLPORT: 3306
+      MYSQLDATABASE: sipal
+      MYSQLUSER: sipaluser
+      MYSQLPASSWORD: Sipal@2026!
+      PORT: 8081
