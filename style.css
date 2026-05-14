@@ -78,11 +78,12 @@ body {
 .counter-badge #filled-count,
 .counter-badge #total-count { font-weight: 700; font-size: 1.05rem; }
 
-/* ---- Tower + Write layout: tower centered, form absolute-right ---- */
+/* ---- Tower + Write layout: centered pair ---- */
 .tower-write-row {
-    position: relative;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
+    gap: 48px;
     margin-bottom: 60px;
 }
 
@@ -91,11 +92,8 @@ body {
 }
 
 .write-col {
-    position: absolute;
-    left: 50%;
-    margin-left: 270px;
-    top: 0;
-    width: 360px;
+    flex: 0 0 360px;
+    padding-top: 12px;
 }
 
 .write-col .write-section {
@@ -109,16 +107,16 @@ body {
     top: 24px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 900px) {
     .tower-write-row {
         flex-direction: column;
         align-items: center;
     }
     .write-col {
-        position: static;
-        margin-left: 0;
+        flex: 0 0 auto;
         width: 100%;
         max-width: 560px;
+        padding-top: 0;
     }
     .write-col .write-card {
         position: static;
@@ -334,17 +332,17 @@ body {
     margin-bottom: 12px; animation: flicker 3s ease-in-out infinite;
 }
 .write-header h2 { font-size: 1.35rem; font-weight: 700; color: var(--text-bright); margin-bottom: 8px; letter-spacing: .04em; }
-.write-desc { font-size: .84rem; color: var(--text-dim); line-height: 1.65; }
+.write-desc { font-size: .84rem; color: var(--text); line-height: 1.65; }
 
 .next-pos-info {
-    text-align: center; font-size: .88rem; color: var(--text-dim);
-    background: rgba(212,148,62,.06); border: 1px solid rgba(212,148,62,.14);
+    text-align: center; font-size: .88rem; color: var(--text);
+    background: rgba(212,148,62,.08); border: 1px solid rgba(212,148,62,.25);
     border-radius: 10px; padding: 12px 20px; margin-bottom: 30px;
 }
 .next-pos-info strong { color: var(--gold-lt); font-size: 1.1rem; }
 
 .form-field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
-.form-field label { font-size: .79rem; color: var(--text-dim); letter-spacing: .04em; }
+.form-field label { font-size: .79rem; color: var(--text); letter-spacing: .04em; }
 .form-field input,
 .form-field textarea {
     background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.09);
@@ -358,8 +356,8 @@ body {
 .form-field input.error,
 .form-field textarea.error { border-color: #c45; }
 .form-field input::placeholder,
-.form-field textarea::placeholder { color: rgba(255,255,255,.18); }
-.char-counter { font-size: .72rem; color: var(--text-dim); text-align: right; }
+.form-field textarea::placeholder { color: rgba(255,255,255,.35); }
+.char-counter { font-size: .72rem; color: var(--text); text-align: right; }
 
 .submit-btn {
     width: 100%;

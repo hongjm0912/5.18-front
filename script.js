@@ -3,10 +3,10 @@
    24×50 CSS Grid tower matching the image
    ============================================ */
 
-const API = 'https://518-production.up.railway.app/api/board';
+const API = '/api/board';
 
 const GRID_COLS = 22;
-const GRID_ROWS = 48;
+const GRID_ROWS = 41;
 
 let totalBlocks = 0;
 let posts = {};
@@ -58,43 +58,38 @@ function generateGrid() {
     /* ── Section C: Sphere / bell area (rows 12–19) ────────────────────
        Wings spread outward, sphere fills center gap                     */
     row(12,  5,  9);  row(12, 12, 16);                          // slight wing
-    row(13,  4,  9);  row(13, 12, 17);                          // wider wing
-    row(14,  2,  9);  row(14, 10, 11, 2); row(14, 12, 19);     // max wing + sphere top
-    row(15,  2,  9);  row(15, 10, 11, 2); row(15, 12, 19);     // sphere centre
-    row(16,  2,  9);  row(16, 10, 11, 2); row(16, 12, 19);     // sphere centre
-    row(17,  3,  9);  row(17, 10, 11, 2); row(17, 12, 18);     // sphere bottom
-    row(18,  4,  9);  row(18, 12, 17);                          // wing closing
-    row(19,  5,  9);  row(19, 12, 16);                          // wing closing
+    row(13,  4,  9);  row(13, 10, 11, 2); row(13, 12, 17);      // wider wing + sphere
+    row(14,  3,  9);  row(14, 10, 11, 2); row(14, 12, 18);     // sphere bottom
+    row(15,  4,  9);  row(15, 10, 11, 2); row(15, 12, 17);     // wing closing + sphere
+    row(16,  5,  9);  row(16, 12, 16);                          // wing closing
 
-    /* ── Section D: Upper pillars (rows 20–27) ─────────────────────────
+    /* ── Section D: Upper pillars (rows 17–23) ─────────────────────────
        Left: cols 7–9 | gap: 10–11 | Right: cols 12–14               */
-    rows(20, 27,  7,  9);
-    rows(20, 27, 12, 14);
+    rows(17, 23,  7,  9);
+    rows(17, 23, 12, 14);
 
-    /* ── Section E: Upper crossbar (rows 28–29) ────────────────────────
+    /* ── Section E: Upper crossbar (rows 24–25) ────────────────────────
        Solid bar + bracket caps (1 block wider each side)               */
-    rows(28, 29,  5, 16);
+    rows(24, 25,  5, 16);
 
-    /* ── Section F: Middle pillars (rows 30–39) ────────────────────────
+    /* ── Section F: Middle pillars (rows 26–34) ────────────────────────
        Same width as upper pillars                                       */
-    rows(30, 39,  7,  9);
-    rows(30, 39, 12, 14);
+    rows(26, 34,  7,  9);
+    rows(26, 34, 12, 14);
 
-    /* ── Section G: Lower crossbar (rows 40–41) ────────────────────────
+    /* ── Section G: Lower crossbar (rows 35–36) ────────────────────────
        Same cap style as upper crossbar                                  */
-    rows(40, 41,  5, 16);
+    rows(35, 36,  5, 16);
 
-    /* ── Section H: Lower flare (rows 42–44) ───────────────────────────
+    /* ── Section H: Lower flare (rows 37–39) ───────────────────────────
        Pillars step outward toward base                                  */
-    row(42,  5,  9);  row(42, 12, 16);
-    row(43,  4,  9);  row(43, 12, 17);
-    row(44,  3,  9);  row(44, 12, 18);
+    row(37,  5,  9);  row(37, 12, 16);
+    row(38,  4,  9);  row(38, 12, 17);
+    row(39,  3,  9);  row(39, 12, 18);
 
-    /* ── Section I: Stepped base (rows 45–47) ──────────────────────────
+    /* ── Section I: Stepped base (row 40) ──────────────────────────────
        Each row steps 1 block outward on both sides                      */
-    row(45,  2,  9);  row(45, 12, 19);
-    row(46,  1,  9);  row(46, 12, 20);
-    row(47,  0,  9);  row(47, 12, 21);  // ground row
+    row(40,  2,  9);  row(40, 12, 19);
 
     return G;
 }
